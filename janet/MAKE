@@ -1,0 +1,3 @@
+# Build for browser use:
+source $HOME/local/emsdk/emsdk_env.sh
+emcc -o ../build/janet.js janet.c play.c -s "EXPORTED_FUNCTIONS=['_run_janet']" -s "EXTRA_EXPORTED_RUNTIME_METHODS=['ccall','cwrap']"

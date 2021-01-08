@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+	<head>
+		<title>The Janet Playground</title>
+		<link rel="stylesheet" href="style.css">
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+		<script src="js/jquery-linedtextarea.js"></script>
+		<script src="js/playground.js"></script>
+		<script>
+		$(document).ready(function() {
+			$('#code').linedtextarea();
+			
+			$('#code').attr('wrap', 'off');
+			var about = $('#about');
+			about.click(function(e) {
+				if ($(e.target).is('a')) {
+					return;
+				}
+				about.hide();
+			});
+			$('#aboutButton').click(function() {
+				if (about.is(':visible')) {
+					about.hide();
+					return;
+				}
+				about.show();
+			});
+                        $('#run').click(function() {
+                            window.run_code();
+                        });
+		});
+
+		</script>
+	</head>
+	<body>
+		<input type="button" value="Run" id="embedRun">
+		<div id="banner">
+			<div id="head">The Janet Playground</div>
+			<input type="button" value="Run" id="run">
+			<input type="button" value="Format" id="fmt">
+			
+			<input type="button" value="About" id="aboutButton">
+		</div>
+		<div id="wrap">
+			<textarea id="code" name="code" autocorrect="off" autocomplete="off" autocapitalize="off" spellcheck="false">
+(defn sumsq [n]
+  (sum
+    (seq [x :range [1 n]]
+      (* x x))))
+
+(print (sumsq 99))
+</textarea>
+</div>
+<div id="output"></div>
+    <script type='text/javascript' src="js/playground.js"></script>
+    <script type='text/javascript' src="js/janet.js"></script>
+
+<div id="about">
+<p><b>About the Janet Playground</b></p>
+
+<p>
+The Janet Playground is a WebAssembly based execution environment for the
+Janet Language (https://janet-lang.org).  
+
+HOWTO:<p>
+
+LIMITATIONS <p>
+
+ETc.
+
+		</div>
+	</body>
+</html>

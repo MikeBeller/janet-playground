@@ -1,6 +1,9 @@
 # Vim savefiles
 .*.swp
 
+# Build directory
+build/*
+
 # Prerequisites
 *.d
 

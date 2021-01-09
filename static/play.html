@@ -10,8 +10,8 @@
 		<script>
 		$(document).ready(function() {
 			$('#code').linedtextarea();
-			
 			$('#code').attr('wrap', 'off');
+
 			var about = $('#about');
 			about.click(function(e) {
 				if ($(e.target).is('a')) {
@@ -26,8 +26,12 @@
 				}
 				about.show();
 			});
+
                         $('#run').click(function() {
-                            window.run_code();
+                            let codeEl = $('#code')[0];
+                            let outputEl = $('#output')[0];
+                            outputEl.innerHTML = "running...";
+                            setTimeout(function() {window.run_janet_code(codeEl, outputEl)}, 0);
                         });
 		});
 

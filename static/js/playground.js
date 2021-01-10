@@ -30,7 +30,8 @@
         window.Module.outputElement = outputElement;
         let code = cleanContentEditableInput(codeElement.value);
         let result = window.run_janet(code);
-        print("RESULT: " + result + "\n");
+        if (result != 0)
+            print("JANET ERROR RESULT: " + result + "\n");
     }
 
     var Module = {

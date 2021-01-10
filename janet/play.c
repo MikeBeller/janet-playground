@@ -11,9 +11,9 @@ int run_janet(char *source) {
     JanetTable *env = janet_core_env(NULL);
 
     // One of several ways to begin the Janet vm.
-    janet_dostring(env, source, "playground", NULL);
+    int ret = janet_dostring(env, source, "playground", NULL);
 
     // Use this to free all resources allocated by Janet.
     janet_deinit();
-    return 0;
+    return ret;
 }

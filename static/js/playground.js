@@ -31,7 +31,7 @@
         let code = cleanContentEditableInput(codeElement.value);
         let result = window.run_janet(code);
         if (result != 0)
-            print("JANET ERROR RESULT: " + result + "\n");
+            window.Module.printErr("ERROREXIT: " + result + "\n");
     }
 
     var Module = {

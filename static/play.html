@@ -1,78 +1,89 @@
 <!doctype html>
 <html>
-	<head>
-		<title>The Janet Playground</title>
-		<link rel="stylesheet" href="style.css">
-		
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-		<script src="js/jquery-linedtextarea.js"></script>
-		<script src="js/playground.js"></script>
-		<script>
-		$(document).ready(function() {
-			$('#code').linedtextarea();
-			$('#code').attr('wrap', 'off');
+    <head>
+        <title>The Janet Playground</title>
+        <link rel="stylesheet" href="style.css">
 
-			var about = $('#about');
-			about.click(function(e) {
-				if ($(e.target).is('a')) {
-					return;
-				}
-				about.hide();
-			});
-			$('#aboutButton').click(function() {
-				if (about.is(':visible')) {
-					about.hide();
-					return;
-				}
-				about.show();
-			});
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+        <script src="js/jquery-linedtextarea.js"></script>
+        <script src="js/playground.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#code').linedtextarea();
+                $('#code').attr('wrap', 'off');
 
-                        $('#run').click(function() {
-                            let codeEl = $('#code')[0];
-                            let outputEl = $('#output')[0];
-                            outputEl.innerHTML = "running...";
-                            setTimeout(function() {window.run_janet_code(codeEl, outputEl)}, 0);
-                        });
-		});
+                var about = $('#about');
+                about.click(function(e) {
+                    if ($(e.target).is('a')) {
+                        return;
+                    }
+                    about.hide();
+                });
+                $('#aboutButton').click(function() {
+                    if (about.is(':visible')) {
+                        about.hide();
+                        return;
+                    }
+                    about.show();
+                });
 
-		</script>
-	</head>
-	<body>
-		<input type="button" value="Run" id="embedRun">
-		<div id="banner">
-			<div id="head">The Janet Playground</div>
-			<input type="button" value="Run" id="run">
-			<input type="button" value="Format" id="fmt">
-			
-			<input type="button" value="About" id="aboutButton">
-		</div>
-		<div id="wrap">
-			<textarea id="code" name="code" autocorrect="off" autocomplete="off" autocapitalize="off" spellcheck="false">
+                function doRunCode() {
+                    let codeEl = $('#code')[0];
+                    let outputEl = $('#output')[0];
+                    outputEl.innerHTML = "running...";
+                    setTimeout(function() {window.run_janet_code(codeEl, outputEl)}, 0);
+                }
+
+                $('#run').click(function() {
+                    doRunCode();
+                });
+
+                $('#code').keydown(function(e) {
+                    if (e.keyCode == 13 && e.ctrlKey) {
+                        doRunCode();
+                    }
+                });
+            });
+
+        </script>
+    </head>
+    <body>
+        <input type="button" value="Run" id="embedRun">
+        <div id="banner">
+            <div id="head">The Janet Playground</div>
+            <input type="button" value="Run" id="run">
+            <input type="button" value="Format" id="fmt">
+
+            <input type="button" value="About" id="aboutButton">
+        </div>
+        <div id="wrap">
+            <textarea id="code" name="code" autocorrect="off" autocomplete="off" autocapitalize="off" spellcheck="false">
 (defn sumsq [n]
   (sum
     (seq [x :range [1 n]]
       (* x x))))
 
-(print (sumsq 99))
-</textarea>
-</div>
-<div id="output"></div>
-    <script type='text/javascript' src="js/playground.js"></script>
-    <script type='text/javascript' src="js/janet.js"></script>
+(print "Hello, World!")
+(sumsq 99)
+            </textarea>
+        </div>
+        <div id="output"></div>
+        <script type='text/javascript' src="js/playground.js"></script>
+        <script type='text/javascript' src="js/janet.js"></script>
 
-<div id="about">
-<p><b>About the Janet Playground</b></p>
+        <div id="about">
+            <p><b>About the Janet Playground</b></p>
 
-<p>
-The Janet Playground is a WebAssembly based execution environment for the
-Janet Language (https://janet-lang.org).  
+            <p>
+            The Janet Playground is a WebAssembly based execution environment for the
+            Janet Language (https://janet-lang.org).  
 
-HOWTO:<p>
+            HOWTO:<p>
 
-LIMITATIONS <p>
+            LIMITATIONS <p>
 
-ETc.
+            ETc.
 
-		</div>
-	</body>
+        </div>
+    </body>
 </html>

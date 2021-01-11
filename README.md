@@ -14,9 +14,11 @@ in the Janet community.
 
 **Case C:** For sharing live code with others for discussion purposes.
 
-There is a public demo of one "mode" of using the playground
+There is a public demo of one way that you can deploy the playground (to
+support "Case A" above) 
 at https://externalweb.s3.amazonaws.com/play/play.html
-To try the rest, for now you have to install.
+
+Public availability of use cases B and C above is coming soon.
 
 ## Installation
 
@@ -33,9 +35,7 @@ jpm install https://github.com/MikeBeller/janet-playground.git
 ./playground serve  # starts a server on localhost:8000
 ```
 
-Then point your browser to http://localhost:8000/ for a demo.
-
-**Note -- "playground serve" not working yet.  Coming soon.**
+Then point your browser to http://localhost:8000/ to try it out.
 
 ## FAQ
 
@@ -48,6 +48,10 @@ said, the web repl *does* permit sequential execution of Janet forms,
 with subsequent forms operating on the same running fiber as the previous
 forms.  That is not how janet-playground works.  It is "one shot".  Creates
 and interpreter, runs the example, and then de-inits janet.
+
+**Q: How do I share code using the playground (cases B and C above)?**
+
+A: Coming soon.
 
 ## Note of thanks to Go Playground
 

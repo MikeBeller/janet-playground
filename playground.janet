@@ -1,4 +1,5 @@
 (import spork/path)
+(use osprey)
 
 (def version "0.0.1")
 
@@ -45,9 +46,16 @@
   (os/rename (path/join "build" "janet.js") (path/join "static" "js" "janet.js"))
   (os/rename (path/join "build" "janet.wasm") (path/join "static" "js" "janet.wasm")))
 
+(GET "/" (redirect "play.html"))
+
 (defn serve
   ```Serve playground. Optional host:port.```
   [&opt host]
   (default host "localhost:8000")
-  (print "unimplemented"))
+  (def [addr port] (string/split ":" host))
+  (when (or (nil? addr) (nil? port) (nil? (scan-number port)))
+    (eprint "Invalid host:port string")
+    (os/exit 1))
+  (enable :static-files "static/")
+  (server (scan-number port) addr))
 

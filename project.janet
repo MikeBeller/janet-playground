@@ -5,7 +5,7 @@
   :version "0.0.1"
   :url "https://github.com/mikebeller/janet-playground"
   :repo "git+https://github.com/mikebeller/janet-playground.git"
-  :dependencies ["git+https://github.com/swlkr/osprey"])
+  :dependencies ["https://github.com/swlkr/osprey"])
 
 (declare-binscript
   :main "playground"

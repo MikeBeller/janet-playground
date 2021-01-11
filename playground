@@ -12,11 +12,12 @@
     help               - Print this usage information
     build              - Create the static site in the 'site' directory
     clean              - Destroy the static site directory
-    serve [<host>]     - Serves current site on <host> (default localhost:8000)
+    serve [<host:port>]- Serves current site on <host:port> (default localhost:8000)
     version            - Print the playground version
 ```)
 
-(when (not= 2 (length args))
+(when (< (length args) 2)
+  (eprint "missing command")
   (eprint usage)
   (os/exit -1))
 
@@ -29,4 +30,8 @@
   "clean" (play/clean)
   "serve" (play/serve (get args 2))
   "install" (play/install)
-  "build" (play/build))
+  "build" (play/build)
+  (do
+    (eprint "Invalid command")
+    (eprint usage)
+    (os/exit 1)))

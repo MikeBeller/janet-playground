@@ -1,5 +1,0 @@
-# Build for browser use
-EMSDK_PATH=$HOME/local/emsdk  # update this for your emsdk
-source $EMSDK_PATH/emsdk_env.sh
-mkdir -p ../build
-emcc -o ../build/janet.js janet.c play.c -s "EXPORTED_FUNCTIONS=['_run_janet']" -s "EXTRA_EXPORTED_RUNTIME_METHODS=['ccall','cwrap']"

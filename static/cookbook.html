@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Janet Live Cookbook</title>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+        <script src="js/playground.js"></script>
+        <script>
+            function doRunCode(name) {
+                let codeID = "#" + name + "_code";
+                let outputID = "#" + name + "_output";
+                let codeEl = $(codeID)[0];
+                let outputEl = $(outputID)[0];
+                outputEl.innerHTML = "running...";
+                setTimeout(function() {window.run_janet_code(codeEl, outputEl)}, 0);
+            }
+            $(document).ready(function() {
+                $('.code').attr('wrap', 'off');
+            });
+
+        </script>
+    </head>
+    <body>
+        <h1>Janet Live Cookbook</h1>
+        <p>A simple proof-of-concept demonstration of a "live cookbook" for Janet.
+        Examples can be run right in the page. Obviously the style needs lots
+        of work. Wish I knew CSS better.  :-)</p>
+        <p>Note that you can even edit the code examples right on the page!</p>
+        <h2>Working with Arrays And Tuples</h2>
+        <p>Janet's indexed combinators (e.g. <code>map</code>, <code>filter</code>, <code>reduce</code>) return new
+        arrays, regardless of whether the collection argument passed to them was
+        a tuple or an array.</p>
+        <button type="button" onclick="doRunCode('example1')">Run</button>
+        <textarea id="example1_code" autocorrect="off" autocomplete="off" autocapitalize="off" spellcheck="false" style='width: 100%; border: none;'>
+        (filter even? (range 10))
+        </textarea>
+        <div class="output" id="example1_output"></div>
+        <p>If you need the result in a tuple you can force it with <code>tuple</code>
+        or <code>tuple/slice</code> as follows:</p>
+        <button type="button" onclick="doRunCode('example2')">Run</button>
+        <textarea id="example2_code" autocorrect="off" autocomplete="off" autocapitalize="off" spellcheck="false" style='width: 100%; border: none;'>
+        (pp (tuple (filter even? (range 10))))
+        (pp (tuple/slice (filter even? (range 10))))
+        </textarea>
+        <div class="output" id="example2_output"></div>
+
+        <h2>Increment a value in an array</h2>
+        <p>The augmented arithmetic assignment operators, ++,--,+=, = (where X is +,-,*,/,%)
+        are actually macros so you can use them on an indexed data structure like an array.</p>
+        <button type="button" onclick="doRunCode('example3')">Run</button>
+        <textarea id="example3_code" rows="6" autocorrect="off" autocomplete="off" autocapitalize="off" spellcheck="false" style='width: 100%; border: none; overflow: auto;'>
+            (def a (array/new-filled 3 0))
+            (pp a)
+            (++ (a 1))
+            (+= (a 2) 7)
+            (pp a)
+        </textarea>
+        <div class="output" id="example3_output"></div>
+
+
+
+        <script type='text/javascript' src="js/playground.js"></script>
+        <script type='text/javascript' src="js/janet.js"></script>
+    </body>
+</html>

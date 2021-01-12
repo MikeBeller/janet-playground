@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+    <head>
+        <title>The Janet Playground</title>
+    </head>
+    <body>
+        <h1>The Janet Playground</h1>
+        This page has a few examples of the potential use of the "janet-playground"
+        -- https://github.com/mikebeller/janet-playground.
+
+        <h2>Use Case A -- online Janet execution with no install</h2>
+        <p>Intent is to allow for people to try Janet with no install.  Different
+        from the online REPL on janet-lang.org because the multiline code window
+        and "run" button (also ctrl-enter) allows for a more comfortable
+        environment for trying out longer code examples.</p>
+
+        <a href=play.html>Try out use case A here</a>
+
+        <p>This use case requires no back end code and so it can sit on a static server.</p>
+
+        <h2>Use Case B -- live tutorial docs</h2>
+        <p>In this use case, we integrate a "run" button into examples of code
+        in a web page.  For example, below is a page of the "janet-cookbook"
+        modified to have runnable sample code.</p>
+
+        <a href=cookbook.html>Try out use case B here</a>
+
+        <p>This use case requires no back end code and so it can sit on a static server.</p>
+
+        <h2>Use Case C -- sharing live code snippets</h2>
+        <p>In this use case, we integrate a "save" button into the playground,
+        which saves the code in the window and returns a unique URL which can
+        be used to send to someone else so they can bring up and run that playground
+        with that specific code example.  This is available in play.golang.org and is
+        a huge boon to their community.  The downside is this requires a back end service
+        to save the example.  The community has some active webservers (e.g.
+        janet-lang.org and janetdocs.com).  Maybe this could be integrated with them?</p>
+
+        <p>This is a work in progress so nothing to try out yet.  I am debating possible
+        approaches to saving the data and interested in input.  Possible approaches:
+
+        <ul>
+            <li>Save code examples in a local database.  (e.g. sqlite would be sufficient).
+                The downside is that someone needs to maintain the database. If we were
+                to lose it then live examples posted in various forums would become 404s.
+                This is the approach used by play.golang.org</li>
+            <li>Save the code examples to a gist.  This would require some github API
+                integration.  The RUST playground autogenerates gists on their own
+                account when people press "save as gist" on that playground.  I wonder
+                why they don't get in trouble with github for creating so many gists?
+                Anyway this is certainly an alternative.</li>
+        </ul>
+
+    </body>
+</html>

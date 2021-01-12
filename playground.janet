@@ -46,7 +46,7 @@
   (os/rename (path/join "build" "janet.js") (path/join "static" "js" "janet.js"))
   (os/rename (path/join "build" "janet.wasm") (path/join "static" "js" "janet.wasm")))
 
-(GET "/" (redirect "play.html"))
+#(GET "/" (redirect "play.html"))
 
 (defn serve
   ```Serve playground. Optional host:port.```

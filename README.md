@@ -14,6 +14,8 @@ in the Janet community.
 
 **Case C:** For sharing live code with others for discussion purposes.
 
+## Public demo site
+
 There is a public demo of one way that you can deploy the playground (to
 support "Case A" and "Case B" described above) at: https://externalweb.s3.amazonaws.com/play/index.html
 

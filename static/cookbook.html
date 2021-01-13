@@ -11,8 +11,9 @@
                 let outputID = "#" + name + "_output";
                 let codeEl = $(codeID)[0];
                 let outputEl = $(outputID)[0];
+                let code = codeEl.value;
                 outputEl.innerHTML = "running...";
-                setTimeout(function() {window.run_janet_code(codeEl, outputEl)}, 0);
+                setTimeout(function() {window.run_janet_code(code, outputEl)}, 0);
             }
             $(document).ready(function() {
                 $('.code').attr('wrap', 'off');

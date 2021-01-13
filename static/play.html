@@ -31,7 +31,8 @@
                     let codeEl = $('#code')[0];
                     let outputEl = $('#output')[0];
                     outputEl.innerHTML = "running...";
-                    setTimeout(function() {window.run_janet_code(codeEl, outputEl)}, 0);
+                    let code = codeEl.value;
+                    setTimeout(function() {window.run_janet_code(code, outputEl)}, 0);
                 }
 
                 $('#run').click(function() {

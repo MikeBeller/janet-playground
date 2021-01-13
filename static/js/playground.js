@@ -25,11 +25,11 @@
         printRaw(htmlEscape(text));
     }
 
-    function run_janet_code(codeElement, outputElement) {
+    function run_janet_code(code, outputElement) {
         outputElement.innerHTML = "";
         window.Module.outputElement = outputElement;
-        let code = cleanContentEditableInput(codeElement.value);
-        let result = window.run_janet(code);
+        let cleanCode = cleanContentEditableInput(code);
+        let result = window.run_janet(cleanCode);
         if (result != 0)
             window.Module.printErr("ERROREXIT: " + result + "\n");
     }

@@ -31,7 +31,7 @@
             "-s" "EXPORTED_FUNCTIONS=['_run_janet']"
             "-s" "EXTRA_EXPORTED_RUNTIME_METHODS=['ccall','cwrap']"]
           :p))
-      ([err] (eprint "Can't run emcc.  Ensure emcc is installed and in your path, and emsdk_defs.sh has been sourced into your current environment"))))
+      ([err] (eprint "Can't run emcc.  Ensure emcc is installed and in your path, and emsdk_env.sh has been sourced into your current environment"))))
   (when (not= result 0)
     (eprint "Error running emcc.  Build failed.")))
 

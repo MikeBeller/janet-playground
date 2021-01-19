@@ -11,8 +11,13 @@
 
     function htmlEscape(text) {
         //text = ansi_up.ansi_to_html(text);
-        text = text.replace('\n', '<br>', 'g');
-        return text;
+        return text
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;")
+            .replace('\n', '<br>', 'g');
     }
 
     function cleanContentEditableInput(text) {

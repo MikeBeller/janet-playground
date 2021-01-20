@@ -4,46 +4,22 @@
         <title>The Janet Playground</title>
         <link rel="stylesheet" href="style.css">
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-        <script src="js/jquery-linedtextarea.js"></script>
-        <script src="js/playground.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/mode-clojure.min.js"></script>
         <script>
-            $(document).ready(function() {
-                $('#code').linedtextarea();
-                $('#code').attr('wrap', 'off');
-
-                var about = $('#about');
-                about.click(function(e) {
-                    if ($(e.target).is('a')) {
-                        return;
-                    }
-                    about.hide();
-                });
-                $('#aboutButton').click(function() {
-                    if (about.is(':visible')) {
-                        about.hide();
-                        return;
-                    }
-                    about.show();
-                });
-
+            document.addEventListener("DOMContentLoaded", function (ev) {
                 function doRunCode() {
-                    let codeEl = $('#code')[0];
-                    let outputEl = $('#output')[0];
+                    let outputEl = document.querySelector('#output');
                     outputEl.innerHTML = "running...";
-                    let code = codeEl.value;
+                    let code = window.editor.getValue();
                     setTimeout(function() {window.run_janet_code(code, outputEl)}, 0);
                 }
 
-                $('#run').click(function() {
+                document.querySelector("#run").addEventListener("click", function (e) {
                     doRunCode();
                 });
 
-                $('#code').keydown(function(e) {
-                    if (e.keyCode == 13 && e.ctrlKey) {
-                        doRunCode();
-                    }
-                });
+                window.doRunCode = doRunCode;
             });
 
         </script>
@@ -52,39 +28,35 @@
         <input type="button" value="Run" id="embedRun">
         <div id="banner">
             <div id="head">The Janet Playground</div>
-            <input type="button" value="Run" id="run">
-            <input type="button" value="Format" id="fmt">
+            <input type="button" value="Run" title="run code also ctrl-enter" id="run">
 
-            <input type="button" value="About" id="aboutButton">
+            <input type="button" value="About" id="aboutButton" "disabled">
         </div>
         <div id="wrap">
-            <textarea id="code" name="code" autocorrect="off" autocomplete="off" autocapitalize="off" spellcheck="false">
+<div id="code">
 (defn sumsq [n]
-  (sum
-    (seq [x :range [1 n]]
-      (* x x))))
+    (sum
+        (seq [x :range [1 n]]
+        (* x x))))
 
 (print "Hello, World!")
 (sumsq 99)
-            </textarea>
+</div>
         </div>
         <div id="output"></div>
         <script type='text/javascript' src="js/playground.js"></script>
         <script type='text/javascript' src="js/janet.js"></script>
-
-        <div id="about">
-            <p><b>About the Janet Playground</b></p>
-
-            <p>
-            The Janet Playground is a WebAssembly based execution environment for the
-            Janet Language (https://janet-lang.org).  
-
-            HOWTO:<p>
-
-            LIMITATIONS <p>
-
-            ETc.
-
-        </div>
+<script>
+        window.editor = ace.edit("code");
+        window.editor.session.setMode("ace/mode/clojure");
+        editor.commands.addCommand({
+            name: 'run',
+            bindKey: {win: 'Ctrl-Enter',  mac: 'Ctrl-Enter'},
+            exec: function(editor) {
+                window.doRunCode();
+            },
+            readOnly: true // false if this command should not apply in readOnly mode
+        });
+</script>
     </body>
 </html>

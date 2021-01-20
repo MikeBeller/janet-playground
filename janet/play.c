@@ -12,7 +12,7 @@ int run_janet(char *source) {
     // Run the code in the source argument, and pretty-print the result
     Janet result;
     int ret = janet_dostring(env, source, "playground", &result);
-    janet_printf("RESULT> %j\n", result);
+    janet_printf("RESULT> %q\n", result);
 
     // Free all resources associated with Janet
     janet_deinit();

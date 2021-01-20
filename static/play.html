@@ -5,6 +5,7 @@
         <link rel="stylesheet" href="style.css">
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/mode-clojure.min.js"></script>
         <script>
             document.addEventListener("DOMContentLoaded", function (ev) {
                 function doRunCode() {
@@ -18,6 +19,7 @@
                     doRunCode();
                 });
 
+                window.doRunCode = doRunCode;
             });
 
         </script>
@@ -26,13 +28,12 @@
         <input type="button" value="Run" id="embedRun">
         <div id="banner">
             <div id="head">The Janet Playground</div>
-            <input type="button" value="Run" id="run">
-            <input type="button" value="Format" id="fmt">
+            <input type="button" value="Run" title="run code also ctrl-enter" id="run">
 
-            <input type="button" value="About" id="aboutButton">
+            <input type="button" value="About" id="aboutButton" "disabled">
         </div>
         <div id="wrap">
-            <div id="code">
+<div id="code">
 (defn sumsq [n]
     (sum
         (seq [x :range [1 n]]
@@ -40,13 +41,22 @@
 
 (print "Hello, World!")
 (sumsq 99)
-            </div>
+</div>
         </div>
         <div id="output"></div>
         <script type='text/javascript' src="js/playground.js"></script>
         <script type='text/javascript' src="js/janet.js"></script>
 <script>
-            window.editor = ace.edit("code");
-</script
+        window.editor = ace.edit("code");
+        window.editor.session.setMode("ace/mode/clojure");
+        editor.commands.addCommand({
+            name: 'run',
+            bindKey: {win: 'Ctrl-Enter',  mac: 'Ctrl-Enter'},
+            exec: function(editor) {
+                window.doRunCode();
+            },
+            readOnly: true // false if this command should not apply in readOnly mode
+        });
+</script>
     </body>
 </html>

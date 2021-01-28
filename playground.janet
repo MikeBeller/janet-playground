@@ -40,11 +40,11 @@
   []
   (try
     (do
-      (os/rm (path/join "static" "js" "janet.js"))
-      (os/rm (path/join "static" "js" "janet.wasm")))
+      (os/rm (path/join "public" "js" "janet.js"))
+      (os/rm (path/join "public" "js" "janet.wasm")))
     ([err]))
-  (os/rename (path/join "build" "janet.js") (path/join "static" "js" "janet.js"))
-  (os/rename (path/join "build" "janet.wasm") (path/join "static" "js" "janet.wasm")))
+  (os/rename (path/join "build" "janet.js") (path/join "public" "js" "janet.js"))
+  (os/rename (path/join "build" "janet.wasm") (path/join "public" "js" "janet.wasm")))
 
 #(GET "/" (redirect "play.html"))
 
@@ -56,6 +56,6 @@
   (when (or (nil? addr) (nil? port) (nil? (scan-number port)))
     (eprint "Invalid host:port string")
     (os/exit 1))
-  (enable :static-files "static/")
+  (enable :static-files)
   (server (scan-number port) addr))
 

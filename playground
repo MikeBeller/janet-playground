@@ -10,8 +10,9 @@
 
   Actions:
     help               - Print this usage information
-    build              - Create the static site in the 'site' directory
-    clean              - Destroy the static site directory
+    build              - Build the janet and playground wasm and js artifacts
+    install            - Move the janet and playground wasm and js artifacts to the public directory
+    clean              - Delete the generated wasm and js artifacts
     serve [<host:port>]- Serves current site on <host:port> (default localhost:8000)
     version            - Print the playground version
 ```)

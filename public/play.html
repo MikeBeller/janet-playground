@@ -4,8 +4,8 @@
         <title>The Janet Playground</title>
         <link rel="stylesheet" href="style.css">
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/mode-clojure.min.js"></script>
+        <script src="/ace/ace.js"></script>
+        <script src="/ace/mode-clojure.js"></script>
         <script>
             document.addEventListener("DOMContentLoaded", function (ev) {
                 function doRunCode() {
@@ -35,9 +35,9 @@
         <div id="wrap">
 <div id="code">
 (defn sumsq [n]
-    (sum
-        (seq [x :range [1 n]]
-        (* x x))))
+  (sum
+    (seq [x :range [1 n]]
+         (* x x))))
 
 (print "Hello, World!")
 (sumsq 99)
@@ -49,6 +49,10 @@
 <script>
         window.editor = ace.edit("code");
         window.editor.session.setMode("ace/mode/clojure");
+        window.editor.setOptions({
+            tabSize: 2,
+            useSoftTabs: true,
+        });
         editor.commands.addCommand({
             name: 'run',
             bindKey: {win: 'Ctrl-Enter',  mac: 'Ctrl-Enter'},

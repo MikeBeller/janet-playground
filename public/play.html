@@ -20,15 +20,34 @@
                 });
 
                 window.doRunCode = doRunCode;
+
+                function doFormatCode() {
+                    let userCode = window.editor.getValue();
+                    let code = "(import ./spork);" + "\n(def usercode ``````````" + userCode + "``````````) (spork/fmt/format-print usercode)";
+                    let result = window.run_janet_for_output(code);
+                    const suffix = 'RESULT> nil\n';
+                    if (!result.endsWith(suffix)) {
+                        alert("format failed: " + result);
+                    } else {
+                        let formattedCode = result.slice(0,-suffix.length);
+                        window.editor.setValue(formattedCode);
+                    }
+                }
+
+                document.querySelector("#format").addEventListener("click", function (e) {
+                    doFormatCode();
+                });
+
+                window.doFormatCode = doFormatCode;
             });
 
         </script>
     </head>
     <body>
-        <input type="button" value="Run" id="embedRun">
         <div id="banner">
             <div id="head">The Janet Playground</div>
             <input type="button" value="Run" title="run code also ctrl-enter" id="run">
+            <input type="button" value="Format" title="format with spork" id="format">
 
             <input type="button" value="About" id="aboutButton" "disabled">
         </div>

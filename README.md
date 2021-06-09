@@ -5,7 +5,7 @@ like that of https://play.golang.org
 
 Intended to enable sharing of "runnable" example code in the Janet community. 
 
-Currently the janet.wasm artifact produced here implements the "playground"
+Currently the janet.wasm artifact produced here is used by the "playground"
 functionality in [JanetDocs](https://janetdocs.com/playground)
 
 ## Installation
@@ -18,7 +18,7 @@ Then:
 
 ```
 jpm install https://github.com/MikeBeller/janet-playground.git
-./playground update-janet 1.16 # or whatever release version you want
+./playground update-janet v1.16.0 # or whatever release version you want
 ./playground build
 ./playground install
 ./playground serve  # starts a server on localhost:8000

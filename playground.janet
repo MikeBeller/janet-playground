@@ -1,7 +1,7 @@
 (import spork/path)
 (use osprey)
 
-(def version "0.0.1")
+(def version "0.0.2")
 
 (defn clean
   ```Clean up build artifacts```
@@ -54,6 +54,23 @@
     ([err]))
   (os/rename (path/join "build" "janet.js") (path/join "public" "js" "janet.js"))
   (os/rename (path/join "build" "janet.wasm") (path/join "public" "js" "janet.wasm")))
+
+(defn get-release-file [ver name]
+  (def url (path/join "https://github.com/janet-lang/janet/releases/download" ver name))
+  (print "GETTING: " url)
+  (os/execute ["curl" "-sL" "-o" (path/join "janet" name) url] :xp))
+
+(defn update-janet
+  ```Download janet.j/janet.h for the requested version```
+  [ver]
+  (def result
+    (try
+      (do
+        (get-release-file ver "janet.c")
+        (get-release-file ver "janet.h"))
+      ([err] (eprint err))))
+  (when (not= result 0)
+    (eprint "Error downloading requested Janet version")))
 
 #(GET "/" (redirect "play.html"))
 

@@ -10,6 +10,7 @@
 
   Actions:
     help               - Print this usage information
+    update-janet <ver> - Downloads janet.c/janet.h for version <ver> to janet/ subdirectory
     build              - Build the janet and playground wasm and js artifacts
     install            - Move the janet and playground wasm and js artifacts to the public directory
     clean              - Delete the generated wasm and js artifacts
@@ -30,6 +31,7 @@
   "version" (print play/version)
   "clean" (play/clean)
   "serve" (play/serve (get args 2))
+  "update-janet" (play/update-janet (get args 2))
   "install" (play/install)
   "build" (play/build)
   (do

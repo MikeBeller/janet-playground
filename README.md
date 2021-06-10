@@ -26,6 +26,12 @@ jpm install https://github.com/MikeBeller/janet-playground.git
 
 Then point your browser to http://localhost:8000/ to try it out.
 
+## To Update Janet Version In JanetDocs
+
+After building as per above copy janet.wasm and janet.js from the
+`public/js` directory of this repository to the `public/playground`
+directory of the janetdocs repository.
+
 ## FAQ
 
 **Q: How does this relate to the web repl on https://janet-lang.org?**

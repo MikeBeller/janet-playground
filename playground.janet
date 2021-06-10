@@ -58,7 +58,7 @@
 (defn get-release-file [ver name]
   (def url (path/join "https://github.com/janet-lang/janet/releases/download" ver name))
   (print "GETTING: " url)
-  (os/execute ["curl" "-sL" "-o" (path/join "janet" name) url] :xp))
+  (os/execute ["curl" "-sfL" "-o" (path/join "janet" name) url] :xp))
 
 (defn update-janet
   ```Download janet.j/janet.h for the requested version```

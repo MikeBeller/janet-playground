@@ -8,11 +8,13 @@
   []
   (try
     (do
-      (os/rm (path/join "build" "janet.js"))
-      (os/rm (path/join "build" "janet.wasm"))
-      (os/rm (path/join "build" "fmt.jimage"))
+      (each pth ["fmt.jimage" "janet.js" "janet.wasm"]
+        (def fuller-path (path/join "build" pth))
+        (when (os/stat fuller-path)
+          (os/rm fuller-path)))
       (os/rmdir "build"))
-    ([err] )))
+    ([err]
+      (eprintf "%s" err))))
 
 (defn build-fmt-image []
   (def env (require "spork/fmt"))

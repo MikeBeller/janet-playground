@@ -23,7 +23,7 @@
 
                 function doFormatCode() {
                     let userCode = window.editor.getValue();
-                    let code = "(import ./spork);" + "\n(def usercode ``````````" + userCode + "``````````) (spork/fmt/format-print usercode)";
+                    let code = "(import ./fmt)" + "\n(def usercode ``````````" + userCode + "``````````) (fmt/format-print usercode)";
                     let result = window.run_janet_for_output(code);
                     const suffix = 'RESULT> nil\n';
                     if (!result.endsWith(suffix)) {

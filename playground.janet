@@ -8,15 +8,17 @@
   []
   (try
     (do
-      (os/rm (path/join "build" "janet.js"))
-      (os/rm (path/join "build" "janet.wasm"))
-      (os/rm (path/join "build" "spork.jimage"))
+      (each pth ["fmt.jimage" "janet.js" "janet.wasm"]
+        (def fuller-path (path/join "build" pth))
+        (when (os/stat fuller-path)
+          (os/rm fuller-path)))
       (os/rmdir "build"))
-    ([err] )))
+    ([err]
+      (eprintf "%s" err))))
 
-(defn build-spork-image []
-  (def env (require "spork"))
-  (spit "spork.jimage" (make-image env)))
+(defn build-fmt-image []
+  (def env (require "spork/fmt"))
+  (spit "fmt.jimage" (make-image env)))
 
 (defn build
   ```Build wasm module.  Emsdk must be installed and runnable in the current
@@ -26,7 +28,7 @@
   (when (nil? stat)
     (os/mkdir "build"))
   (os/cd "build")
-  (build-spork-image)
+  (build-fmt-image)
   (def result
     (try
       (do
@@ -34,11 +36,12 @@
           @["emcc" "-O2" "-o" "janet.js"
             (path/join ".." "janet" "janet.c")
             (path/join ".." "janet" "play.c")
-            "--embed-file" "spork.jimage"
+            (string "-I" (path/join ".." "janet"))
+            "--embed-file" "fmt.jimage"
             "-s" "EXPORTED_FUNCTIONS=['_run_janet']"
             "-s" "ALLOW_MEMORY_GROWTH=1"
             "-s" "AGGRESSIVE_VARIABLE_ELIMINATION=1"
-            "-s" "EXTRA_EXPORTED_RUNTIME_METHODS=['ccall','cwrap']"]
+            "-s" "EXPORTED_RUNTIME_METHODS=['ccall','cwrap']"]
           :p))
       ([err] (eprint "Can't run emcc.  Ensure emcc is installed and in your path, and emsdk_env.sh has been sourced into your current environment"))))
   (when (not= result 0)

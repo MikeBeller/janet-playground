@@ -17,11 +17,29 @@ to do something like source ./emsdk_env.sh in the emsdk install directory.)
 Then:
 
 ```
+# run an emscripten emsdk image, and install janet
+docker run -it --rm emscripten/emsdk /bin/bash
+git clone https://github.com/janet-lang/janet.git
+cd janet
+make
+make install
+
+cd ..
+git clone --depth=1 https://github.com/janet-lang/jpm.git
+cd jpm/
+janet bootstrap.janet
+
+# Install janet playground
+cd ..
 jpm install https://github.com/MikeBeller/janet-playground.git
-./playground update-janet v1.16.0 # or whatever release version you want
-./playground build
-./playground install
-./playground serve  # starts a server on localhost:8000
+
+# Create the WASM binary
+playground update-janet v1.40.1
+playground build
+playground install  # artifacts now available in public dir
+
+# Run it on port 8000
+playground serve
 ```
 
 Then point your browser to http://localhost:8000/ to try it out.

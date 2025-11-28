@@ -71,7 +71,11 @@
   (os/rename (path/join "build" "janet.wasm") (path/join "public" "js" "janet.wasm")))
 
 (defn get-release-file [ver name]
-  (def url (path/join "https://github.com/janet-lang/janet/releases/download" ver name))
+  (def url 
+    (if (= ver "latest") 
+      (path/join "https://github.com/janet-lang/janet/releases/latest/download" name)
+      (path/join "https://github.com/janet-lang/janet/releases/download" ver name)
+      ))
   (print "GETTING: " url)
   (os/execute ["curl" "-sfL" "-o" (path/join "janet" name) url] :xp))
 

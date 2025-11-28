@@ -1,7 +1,8 @@
 (import spork/path)
+(import sh)
 (use osprey)
 
-(def version "0.0.2")
+(def version "0.0.3")
 
 (defn clean
   ```Clean up build artifacts```
@@ -20,28 +21,39 @@
   (def env (require "spork/fmt"))
   (spit "fmt.jimage" (make-image env)))
 
-(defn build
+(defn build (use-docker)
   ```Build wasm module.  Emsdk must be installed and runnable in the current
-  shell -- on linux, for example, `source emsdk_env.sh` in the emsdk directory.```
+  shell (on linux, for example, `source emsdk_env.sh` in the emsdk directory,)
+  else docker must be installed and running, and the user must have docker privileges.```
   []
   (def stat (os/stat "build"))
   (when (nil? stat)
     (os/mkdir "build"))
+  (def emcc
+    (if use-docker
+      @["docker" "run" "--rm"
+        "-v" (string/join @[(os/cwd) ":/src"])
+        "-u"  (string/trimr (sh/$< "sh" "-c" "echo $(id -u):$(id -g)"))
+        "emscripten/emsdk" "emcc"]
+      @["emcc"]
+   ))
   (os/cd "build")
   (build-fmt-image)
   (def result
     (try
       (do
         (os/execute
-          @["emcc" "-O2" "-o" "janet.js"
-            (path/join ".." "janet" "janet.c")
-            (path/join ".." "janet" "play.c")
-            (string "-I" (path/join ".." "janet"))
-            "--embed-file" "fmt.jimage"
+          (array/join emcc @["-O2" "-o" "janet.js"
+            (path/join "janet" "janet.c")
+            (path/join "janet" "play.c")
+            (string "-I" "janet")
+            "--embed-file" (path/join "build" "fmt.jimage")
             "-s" "EXPORTED_FUNCTIONS=['_run_janet']"
             "-s" "ALLOW_MEMORY_GROWTH=1"
             "-s" "AGGRESSIVE_VARIABLE_ELIMINATION=1"
-            "-s" "EXPORTED_RUNTIME_METHODS=['ccall','cwrap']"]
+            "-s" "EXPORTED_RUNTIME_METHODS=['ccall','cwrap']"
+            "-o" (path/join "build" "janet.js")]
+          )
           :p))
       ([err] (eprint "Can't run emcc.  Ensure emcc is installed and in your path, and emsdk_env.sh has been sourced into your current environment"))))
   (when (not= result 0)

@@ -11,7 +11,8 @@
   Actions:
     help               - Print this usage information
     update-janet <ver> - Downloads janet.c/janet.h for version <ver> to janet/ subdirectory
-    build              - Build the janet and playground wasm and js artifacts
+    build              - Build the janet and playground wasm and js artifacts (using local emcc)
+    build-docker       - Build the janet and playground wasm and js artifacts (using docker emcc)
     install            - Move the janet and playground wasm and js artifacts to the public directory
     clean              - Delete the generated wasm and js artifacts
     serve [<host:port>]- Serves current site on <host:port> (default localhost:8000)
@@ -33,7 +34,8 @@
   "serve" (play/serve (get args 2))
   "update-janet" (play/update-janet (get args 2))
   "install" (play/install)
-  "build" (play/build)
+  "build" (play/build false)
+  "build-docker" (play/build true)
   (do
     (eprint "Invalid command")
     (eprint usage)

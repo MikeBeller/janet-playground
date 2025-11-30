@@ -38,13 +38,14 @@ We use the one in the current directory.  (So no `jpm install` )
 ```
 cd janet-playground
 jpm --local deps 
-jpm --local janet playground update-janet latest
+jpm --local janet playground update-janet latest  # or 'v1.40.1' for that specific version
 jpm --local janet playground build   # or build-docker
 ```
 
 # Run it on port 8000
 
 ```
+jpm --local janet playground install
 jpm --local janet playground serve
 ```
 

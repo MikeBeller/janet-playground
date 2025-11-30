@@ -21,11 +21,11 @@
   (def env (require "spork/fmt"))
   (spit "fmt.jimage" (make-image env)))
 
-(defn build (use-docker)
+(defn build
   ```Build wasm module.  Emsdk must be installed and runnable in the current
   shell (on linux, for example, `source emsdk_env.sh` in the emsdk directory,)
   else docker must be installed and running, and the user must have docker privileges.```
-  []
+  [use-docker]
   (def stat (os/stat "build"))
   (when (nil? stat)
     (os/mkdir "build"))

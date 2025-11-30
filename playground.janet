@@ -39,11 +39,12 @@
    ))
   (os/cd "build")
   (build-fmt-image)
+  (os/cd "..")
   (def result
     (try
       (do
         (os/execute
-          (array/join emcc @["-O2" "-o" "janet.js"
+          (array/join emcc @["-O2" "-o" (path/join "build" "janet.js")
             (path/join "janet" "janet.c")
             (path/join "janet" "play.c")
             (string "-I" "janet")
@@ -52,7 +53,7 @@
             "-s" "ALLOW_MEMORY_GROWTH=1"
             "-s" "AGGRESSIVE_VARIABLE_ELIMINATION=1"
             "-s" "EXPORTED_RUNTIME_METHODS=['ccall','cwrap']"
-            "-o" (path/join "build" "janet.js")]
+            ]
           )
           :p))
       ([err] (eprint "Can't run emcc.  Ensure emcc is installed and in your path, and emsdk_env.sh has been sourced into your current environment"))))
@@ -102,5 +103,7 @@
     (eprint "Invalid host:port string")
     (os/exit 1))
   (enable :static-files)
+  (prin "Starting server at ")
+  (print host)
   (server (scan-number port) addr))
 

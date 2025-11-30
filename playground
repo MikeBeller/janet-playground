@@ -1,6 +1,6 @@
 #!/usr/bin/env janet
 
-(import "playground" :as play)
+(import "./playground" :as play)
 
 (def args (dyn :args))
 

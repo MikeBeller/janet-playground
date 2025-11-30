@@ -24,26 +24,28 @@ to do something like source ./emsdk_env.sh in the emsdk install directory.)
 To use docker, make sure docker is running and that you have docker
 privileges.
 
-# Clone and install janet playground
+# Clone janet-playground
 
 ```sh
 git clone https://github.com/MikeBeller/janet-playground.git
-cd janet-playground
-jpm install 
 ```
 
 # Create the WASM binary
 
+Note -- we do not actually install the playground.janet module.
+We use the one in the current directory.  (So no `jpm install` )
+
 ```
-./playground update-janet v1.4.1   #  or 'latest' for latest
-./playground build  # or build-docker for docker emcc
-./playground install  # artifacts now available in public dir
+cd janet-playground
+jpm --local deps 
+jpm --local janet playground update-janet latest
+jpm --local janet playground build   # or build-docker
 ```
 
 # Run it on port 8000
 
 ```
-./playground serve
+jpm --local janet playground serve
 ```
 
 Then point your browser to http://localhost:8000/ to try it out.

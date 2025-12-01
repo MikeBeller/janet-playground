@@ -10,18 +10,43 @@ functionality in [JanetDocs](https://janetdocs.com/playground)
 
 ## Installation
 
-You must ensure that you have installed emscripten (emsdk) > 2.0
-and that it is in your path and executable.  (Generally you have
+### Prerequisites
+
+You must have janet and JPM installed.
+
+You can build the WASM artifact using a locally installed emcc or
+using emcc via docker.
+
+To use local emcc, you must first install emscripten (emsdk) > 2.0
+and ensure that it is in your path and executable.  (Generally you have
 to do something like source ./emsdk_env.sh in the emsdk install directory.)
 
-Then:
+To use docker, make sure docker is running and that you have docker
+privileges.
+
+# Clone janet-playground
+
+```sh
+git clone https://github.com/MikeBeller/janet-playground.git
+```
+
+# Create the WASM binary
+
+Note -- we do not actually install the playground.janet module.
+We use the one in the current directory.  (So no `jpm install` )
 
 ```
-jpm install https://github.com/MikeBeller/janet-playground.git
-./playground update-janet v1.16.0 # or whatever release version you want
-./playground build
-./playground install
-./playground serve  # starts a server on localhost:8000
+cd janet-playground
+jpm --local deps 
+jpm --local janet playground update-janet latest  # or 'v1.40.1' for that specific version
+jpm --local janet playground build   # or build-docker
+```
+
+# Run it on port 8000
+
+```
+jpm --local janet playground install
+jpm --local janet playground serve
 ```
 
 Then point your browser to http://localhost:8000/ to try it out.
